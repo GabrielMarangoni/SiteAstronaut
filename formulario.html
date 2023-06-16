@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <title>Formulário</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-image">
+            <img src="assets/img/TM.svg" alt="">
+        </div>
+        <div class="form">
+            <form action="#">
+                <div class="form-header">
+                    <div class="title">
+                        <h1>Astronaut™</h1>
+                    </div>
+                    <div class="login-button">
+                        <button><a href="https://youtu.be/cJlDLYaZpKc">Suporte</a></button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-box">
+                        <label for="firstname">Nome Completo</label>
+                        <input id="firstname" type="text" name="firstname and lastname" placeholder="Digite o nome completo" required>
+                    </div>
+
+                    <div class="input-box">
+                        <label for="email">Transportadora</label>
+                        <input id="email" type="text" name="transportadora" placeholder="Digite a transportadora" required>
+                    </div>
+
+                    <div class="input-box">
+                        <label for="date">Data</label>
+                        <input id="date" type="date" name="date" placeholder="Digite a data" required>
+                    </div>
+
+                    <div class="input-box">
+                        <label for="hora">Horário</label>
+                        <input id="hora" type="time" name="hora" placeholder="Digite a hora" required>
+                    </div>
+
+                    <div class="input-box">
+                        <label for="car">Placa do Veículo</label>
+                        <input id="car" type="text" name="car" placeholder="Digite a placa do veículo" required>
+                    </div>
+
+                    <div class="input-box">
+                        <label for="kg">Peso Total (KG)</label>
+                        <input id="kg" type="number" name="kg" placeholder="Digite a pesagem atual" required>
+                    </div>
+
+                    <div class="input-box">
+                        <label for="tipoCarga">Tipo de Carga</label>
+                        <input id="tipoCarga" type="text" name="tipoCarga" placeholder="Digite o tipo de carga" required>
+                    </div>
+                </div>
+
+                <div class="gender-inputs">
+                    <div class="gender-title">
+                        <h6>Fluxo:</h6>
+                    </div>
+
+                    <div class="gender-group">
+                        <div class="gender-input">
+                            <input id="entrada" type="radio" name="fluxo" value="entrada">
+                            <label for="entrada">Entrada</label>
+                        </div>
+
+                        <div class="gender-input">
+                            <input id="saida" type="radio" name="fluxo" value="saida">
+                            <label for="saida">Saída</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="continue-button">
+                    <button onclick="gerarPDF()">Gerar Formulário</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function gerarPDF() {
+            
+            var nome = document.getElementById("firstname").value;
+            var transportadora = document.getElementById("email").value;
+            var data = document.getElementById("date").value;
+            var hora = document.getElementById("hora").value;
+            var placaVeiculo = document.getElementById("car").value;
+            var pesoTotal = document.getElementById("kg").value;
+            var tipoCarga = document.getElementById("tipoCarga").value;
+            var fluxo = document.querySelector('input[name="fluxo"]:checked').value;
+
+            var doc = new jspdf.jsPDF();
+
+            var titulo = "Astronaut™";
+            var conteudo = "Nome: " + nome + "\n" +
+                "Transportadora: " + transportadora + "\n" +
+                "Data: " + data + "\n" +
+                "Horário: " + hora + "\n" +
+                "Placa do Veículo: " + placaVeiculo + "\n" +
+                "Peso Total (KG): " + pesoTotal + "\n" +
+                "Tipo de Carga: " + tipoCarga + "\n" +
+                "Fluxo: " + fluxo;
+
+            var textWidth = doc.getStringUnitWidth(titulo) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+            var textOffset = (doc.internal.pageSize.width - textWidth) / 2;
+            doc.text(titulo, textOffset, 10);
+
+            doc.text(conteudo, 10, 20);
+
+            doc.save("formulario.pdf");
+        }
+    </script>
+</body>
+
+</html>
